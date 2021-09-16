@@ -383,7 +383,7 @@ export default function Home() {
             
           
         </Dados>
-        <div>
+        <div className="chart">
           <Pie data={data}/>
         </div>
         <Link className="fab-receita" to="/receita">

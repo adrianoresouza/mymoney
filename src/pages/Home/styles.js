@@ -36,10 +36,7 @@ export const Content = styled.div`
             svg{
                 color: #FFF;
             }
-        }
-        
-
-        
+        }   
     }
 
     
@@ -69,6 +66,12 @@ export const Content = styled.div`
     button[type=submit]:hover{
         background-color: #FFF;
         color: #F57B3F;
+    }
+
+    .chart{
+        
+        background-color: #FFF;
+        width: 50%;
     }
 
     .fab-receita{
