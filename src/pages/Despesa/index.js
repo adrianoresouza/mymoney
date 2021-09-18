@@ -41,7 +41,7 @@ export default function Despesa() {
     
 
     async function carregaDespesas(){
-        await firebase.firestore().collection('Despesas')
+        await firebase.firestore().collection('Despesas').orderBy('data', 'desc')
         .get()
         .then((snapshot)=>{
             updateState(snapshot);

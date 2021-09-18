@@ -6,7 +6,7 @@ export const Content = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 603px;
+    min-height: 500px;
     margin-left: 210px;
     margin-top: 10px;
     margin-right: 10px;
@@ -16,6 +16,7 @@ export const Content = styled.div`
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     
     .mes{
+        margin: 15px auto;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -26,7 +27,7 @@ export const Content = styled.div`
             border: 2px solid #F57B3F;
             background-color: #FFF;
             outline: 0;
-            margin:0 10px;
+            margin: -2px 10px;
             transition: 0.2s;
         }
 
@@ -68,11 +69,7 @@ export const Content = styled.div`
         color: #F57B3F;
     }
 
-    .chart{
-        
-        background-color: #FFF;
-        width: 50%;
-    }
+    
 
     .fab-receita{
         position:fixed;
@@ -91,8 +88,8 @@ export const Content = styled.div`
         }
 
         @media screen and (max-width: 700px){
-            bottom:160px;
-            right:30px;
+            bottom:200px;
+            right:40px;
         }
     }
 
@@ -112,13 +109,18 @@ export const Content = styled.div`
             margin: 12px auto;
         }
 
+        
+
         @media screen and (max-width: 700px){
-            bottom:80px;
-            right:30px;
+            bottom: 100px;
+            right: 40px;
         }
     }
 
+    
+
     @media screen and (max-width: 700px){
+        height: 100%;
         margin-left: 10px;
         flex-direction: column;
         justify-content: flex-start;
@@ -127,19 +129,14 @@ export const Content = styled.div`
 
 
 
-export const FabDespesa = styled.a`
-	
-
-`;
-
 export const Dados = styled.div`
-    margin: 10px;
+    margin: 15px auto;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    align-items: baseline;
-    justify-content: space-evenly;
+    align-items: center;
+    justify-content: space-around;
 
     @media screen and (max-width: 700px){
         width: 95%;
@@ -148,6 +145,22 @@ export const Dados = styled.div`
         justify-content: center;
         align-items: center;
     }
+
+    .chart{
+
+        border: 2px solid #F57B3F;
+        border-radius: 10px ;
+        background-color: #FFF;
+        width: 45%;
+        
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+        @media screen and (max-width: 700px){
+            margin-top: 15px;
+            width: 30em;
+            
+        }
+    }
 `;
 
 export const Resumo = styled.div`
@@ -155,7 +168,7 @@ export const Resumo = styled.div`
     flex-direction: column;
     border:2px solid  #F57B3F;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    width:200px;
+    width: 150px;
     background-color: #fff;
     border-radius: 10px;
     

@@ -79,7 +79,7 @@ export default function Home() {
     const totalReceitas = somaReceitas;
     let saldo = 0;
     saldo = totalReceitas-totalDespesas;
-    setSaldo('R$'+saldo);
+    setSaldo('R$'+saldo.toFixed(2));
   },[somaDespesas, somaReceitas])
   
 
@@ -113,7 +113,7 @@ export default function Home() {
             setListaDespesas(lista);
             setExisteDespesas(true);
             setSomaDespesas(somaDespesas);
-            setTotalDespesas('R$'+somaDespesas);
+            setTotalDespesas('R$'+somaDespesas.toFixed(2));
             despesasCategoria(lista);
               //setTotalDespesas('R$'+somaDespesas.replace(/\b0+/g, ''));
           }else{
@@ -161,7 +161,7 @@ export default function Home() {
             console.log(lista);
             setListaReceitas(lista);
             setExisteReceitas(true);
-            setTotalReceitas('R$' + somaReceitas);
+            setTotalReceitas('R$' + somaReceitas.toFixed(2));
             setSomaReceitas(somaReceitas);
           }else{
             setListaReceitas([]);
@@ -330,7 +330,7 @@ export default function Home() {
                 return(
                     <tr key={index}>
                         <td data-label="Nome">{item.categoria}</td>
-                        <td data-label="Total(R$)">{item.total}</td>
+                        <td data-label="Total(R$)">{item.total.toFixed(2)}</td>
                     </tr>
                 )
               })}
@@ -376,16 +376,11 @@ export default function Home() {
             </table>
           </Receitas>
           ):(<></>)}
-            
-            
-              
-            
-            
-          
-        </Dados>
         <div className="chart">
           <Pie data={data}/>
         </div>
+        </Dados>
+        
         <Link className="fab-receita" to="/receita">
           <GiReceiveMoney size={30}/>
           </Link>
@@ -393,8 +388,6 @@ export default function Home() {
         <Link className="fab-despesa" to="/despesas">
           <GiPayMoney size={30}/>
         </Link>
-
-        <button onClick={()=>handleLogOut()}>Sair</button>
       </Content>
    </div>
  );
