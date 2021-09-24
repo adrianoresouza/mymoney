@@ -57,7 +57,7 @@ export default function Receita() {
         
         e.preventDefault();
             if(novo){
-                await firebase.firestore().collection('Receitas').orderBy('data', 'desc')
+                await firebase.firestore().collection('Receitas')
             .add({
                 descricao: descricao,
                 tipo: tipo,
