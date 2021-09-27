@@ -1,17 +1,28 @@
 import { BrowserRouter } from 'react-router-dom';
-import Routes from './routes';
-import AuthProvider from './contexts/user';
 
-import Header from './components/Header';
+import Routes from './routes';
+
+
+
+import AuthProvider from './contexts/user';
+import ResumoProvider from './contexts/resumo';
+
+
+
 
 
 function App() {
   return (
+    
       <AuthProvider>
-        <BrowserRouter>
-          <Routes/>
-        </BrowserRouter>
+        <ResumoProvider>
+          <BrowserRouter>
+            <Routes/>
+          </BrowserRouter>
+        </ResumoProvider>
       </AuthProvider>
+    
+      
   );
 }
 

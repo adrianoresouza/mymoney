@@ -9,7 +9,7 @@
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
-.sidebar div{
+.boasvindas{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,6 +43,15 @@
 .content{
     margin-left: 200px;
     padding: 1px 16px;
+}
+
+.chart-header{
+    padding: 15px 0 !important;
+    margin: 0 auto;
+    background-color: #fff;
+    height: 200px;
+    width: 80%;
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 700px){
