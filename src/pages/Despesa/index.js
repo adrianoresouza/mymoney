@@ -31,18 +31,25 @@ export default function Despesa() {
     const [despesa, setDespesa] = useState(null)
 
     useEffect(()=>{
-        carregaDespesas();
+        const d = new Date();
+        let mes= d.getMonth() + 1;
+        carregaDespesas(mes);
         carregaCategorias();
         return()=>{
 
         }
     },[]);
 
-    
+    useEffect(()=>{
+        if(data!==null){
+            let mes = data.getMonth()+1;
+            carregaDespesas(mes);
+        }
+    },[data])
 
-    async function carregaDespesas(){
+    async function carregaDespesas(pMes){
         console.log(user);
-        await firebase.firestore().collection('Despesas').orderBy('data', 'desc')
+        await firebase.firestore().collection('Despesas').where('mes','==',pMes).orderBy('data', 'desc')
         .where('idUsuario', '==', user.uid)
         .get()
         .then((snapshot)=>{

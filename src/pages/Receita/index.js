@@ -32,17 +32,26 @@ export default function Receita() {
     const [receita, setReceita] = useState(null)
 
     useEffect(()=>{
-        carregaReceitas();
+        const d = new Date();
+        let mes= d.getMonth() + 1;
+        carregaReceitas(mes);
         carregaCategorias();
         return()=>{
 
         }
     },[]);
 
+
+    useEffect(()=>{
+        if(data!==null){
+            let mes = data.getMonth()+1;
+            carregaReceitas(mes);
+        }
+    },[data])
     
 
-    async function carregaReceitas(){
-        await firebase.firestore().collection('Receitas').where('idUsuario', '==', user.uid)
+    async function carregaReceitas(pMes){
+        await firebase.firestore().collection('Receitas').where('mes','==',pMes).where('idUsuario', '==', user.uid).orderBy('data', 'desc')
         .get()
         .then((snapshot)=>{
             updateState(snapshot);
