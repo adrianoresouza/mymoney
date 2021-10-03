@@ -157,7 +157,7 @@ export const Dados = styled.div`
 
         @media screen and (max-width: 700px){
             margin-top: 15px;
-            width: 30em;
+            width: 20em;
             
         }
     }

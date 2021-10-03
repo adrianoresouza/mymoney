@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../contexts/user';
+import { ResumoContext } from '../../contexts/resumo';
 import firebase from '../../services/firebaseConnection';
 import { format } from 'date-fns';
 
@@ -18,6 +19,7 @@ import { MdStyle } from 'react-icons/md';
 
 export default function Despesa() {
     const { user } = useContext(AuthContext);
+    const { atualizaGrafico } = useContext(ResumoContext);
     const [descricao, setDescricao] = useState('');
     const [tipo, setTipo] = useState('');
     const [valor, setValor] = useState(0);
@@ -76,11 +78,12 @@ export default function Despesa() {
                     idUsuario: user.uid,
                 })
                 .then(()=>{
-                    carregaDespesas();
+                    carregaDespesas(data.getMonth()+1);
+                    atualizaGrafico();
                     setDescricao('');
                     setTipo('');
                     setValor(0);
-                    setData('');
+                    //setData(d);
                     setSaving(false);
                 })
                 }else{
@@ -96,11 +99,12 @@ export default function Despesa() {
                         ano: data.getFullYear(),
                     })
                     .then(()=>{
-                        carregaDespesas();
+                        carregaDespesas(data.getMonth()+1);
+                        atualizaGrafico();
                         setDescricao('');
                         setTipo('');
                         setValor(0);
-                        setData('');
+                        //setData(d);
                         setLoading(false);
                         setNovo(true);
                     })
@@ -178,7 +182,7 @@ export default function Despesa() {
             setNovo(true);
             setDescricao('');
             setDespesa(null);
-            carregaDespesas();
+            carregaDespesas(data.getMonth()+1);
             //setLoading(false);
         })
         .catch((error)=>{

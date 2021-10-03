@@ -75,10 +75,13 @@ const { totalReceitas, totalDespesas, calculando } = useContext(ResumoContext);
     <div className="chart-header">
 
       <VictoryBar
+          style={{ data: { fill: ({datum}) => datum.tipo === "Receita" ? "#73B0E3": "#c43a31" } }}
           domainPadding={{ x:80} }
           height={400}
           width={400}
           data={data}
+          barRatio={0.9}
+          
           // data accessor for x values
           x="tipo"
           // data accessor for y values

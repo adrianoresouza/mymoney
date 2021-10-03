@@ -27,7 +27,11 @@ function ResumoProvider({children}){
         const d = new Date();
         return d.getMonth() + 1;
     }
-    
+    async function atualizaGrafico(){
+        carregaReceitas(user.uid);
+        carregaDespesas(user.uid);
+    }
+
     async function carregaReceitas(id){
         let pMes = returnCurrentMonth();
         let hoje = new Date();
@@ -86,7 +90,7 @@ function ResumoProvider({children}){
 
 
     return(
-        <ResumoContext.Provider value ={{totalReceitas, totalDespesas, calculando}}>
+        <ResumoContext.Provider value ={{totalReceitas, totalDespesas, calculando, atualizaGrafico}}>
             {children}
         </ResumoContext.Provider>
     )

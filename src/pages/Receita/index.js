@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../contexts/user';
+import ResumoProvider, { ResumoContext } from '../../contexts/resumo';
 import firebase from '../../services/firebaseConnection';
 import { format } from 'date-fns';
 
@@ -18,6 +19,7 @@ import { MdStyle } from 'react-icons/md';
 
 export default function Receita() {
     const { user } = useContext(AuthContext);
+    const { atualizaGrafico } = useContext(ResumoContext);
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [tipo, setTipo] = useState('Receita');
@@ -78,7 +80,8 @@ export default function Receita() {
                 idUsuario: user.uid,
             })
             .then(()=>{
-                carregaReceitas();
+                carregaReceitas(data.getMonth()+1);
+                atualizaGrafico();
                 setDescricao('');
                 setTipo('');
                 setValor(0);
@@ -98,7 +101,8 @@ export default function Receita() {
                 ano: data.getFullYear(),
             })
             .then(()=>{
-                carregaReceitas();
+                carregaReceitas(data.getMonth()+1);
+                atualizaGrafico();
                 setDescricao('');
                 setTipo('');
                 setValor(0);
@@ -179,7 +183,8 @@ export default function Receita() {
             setNovo(true);
             setDescricao('');
             setReceita(null);
-            carregaReceitas();
+            carregaReceitas(data.getMonth()+1);
+            atualizaGrafico();
             //setLoading(false);
         })
         .catch((error)=>{
