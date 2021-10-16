@@ -7,8 +7,10 @@ import logo from '../../assets/NicePng_save-money-png_10074776.png';
 
 
 
+
+
 export default function SignIn() {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, loadingAuth } = useContext(AuthContext);
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -33,9 +35,14 @@ export default function SignIn() {
           <h1>Entrar</h1>
           <input type="text" placeholder="email@email.com" value={email} onChange={(e)=>setEmail(e.target.value)}/>
           <input type="password" placeholder="***********" value={senha} onChange={(e)=>setSenha(e.target.value)}/>
-          <button id="bt-signin" type="submit">Acessar</button>
+          {loadingAuth ? (
+            <button id="bt-signin" type="submit">Acessando...</button>
+          ) : (
+            <button id="bt-signin" type="submit">Acessar</button>
+          )}
+          
         </form>
-        <Link to="/register">Criar uma conta</Link>
+        <Link className="criarConta" to="/register">Criar uma conta</Link>
       </div>
      
    </div>

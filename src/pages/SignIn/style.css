@@ -64,16 +64,17 @@
     transition: 0.1s;
   }
 
+  .criarConta{
+    padding: 10px;
+  }
+  
+
   #bt-signin:hover{
     background-color: darkblue;
     font-size: 1.5em;
   }
   
-  .login-signin a{
-    margin: 1.5em 0;
-    color: #000;
-    cursor: pointer;
-  }
+  
   
   
 @media screen and (max-width: 700px){

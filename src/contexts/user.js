@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect } from "react";
 import firebase from '../services/firebaseConnection';
 
+
 export const AuthContext = createContext({}); 
 
 function AuthProvider({children}){
@@ -74,7 +75,9 @@ function AuthProvider({children}){
             setLoadingAuth(false);
         })
         .catch((error)=>{
-            console.log(error);
+            if(error.code == "auth/wrong-password"){
+                alert("Senha ou e-mail incorretos");
+            }
             setLoadingAuth(false);
         })
     }
@@ -92,7 +95,7 @@ function AuthProvider({children}){
     }
 
     return(
-        <AuthContext.Provider value={{ signed: !!user, user, loading, signUp, signIn, signOut }}>
+        <AuthContext.Provider value={{ signed: !!user, user, loading, loadingAuth,signUp, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
     )
