@@ -20,6 +20,11 @@ export const Content = styled.div`
         padding: 5px;
     }
 
+    input[type=checkbox]{
+        padding: 5px;
+        margin-right: 5px;
+    }
+
     select{
         padding: 5px;
     }

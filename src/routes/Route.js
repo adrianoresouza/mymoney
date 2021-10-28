@@ -1,7 +1,8 @@
+import React from 'react';
 import { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../contexts/user';
-import { redirect } from 'statuses';
+
 
 export default function RouteWrapper({
     component: Component, //componente que irá renderizar

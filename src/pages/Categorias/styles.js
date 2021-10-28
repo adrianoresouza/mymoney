@@ -4,6 +4,7 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    
     margin-left: 210px;
     margin-top: 10px;
     margin-right: 10px;
@@ -11,15 +12,24 @@ export const Content = styled.div`
     background-color: #cecece;
     padding: .8em;
     
-
+    form{
+        justify-content: center;
+        align-items: center;
+        label{
+            align-self: flex-start;
+        }
+    }
     input{
         padding: 5px;
+        width: 100%;
         margin: 10px 0;
+        
     }
 
     select{
         padding: 5px;
         margin: 10px 0;
+        width: 100%;
     }
 
     button[type=submit]{
@@ -28,7 +38,7 @@ export const Content = styled.div`
         background-color: #F57B3F;
         transition: 0.3s;
         border: 0;
-        padding: 9px 0;
+        padding: 10px 0;
         color: white;
         border-radius: 5px;
     }

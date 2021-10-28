@@ -10,9 +10,8 @@ import {GiReceiveMoney, GiPayMoney} from 'react-icons/gi';
 import Header from '../../components/Header';
 import Title from '../../components/Title';
 
-import { Content, Dados,Receitas, Despesas, Resumo, FabReceita, FabDespesa } from './styles.js';
-import { formatValue } from 'react-currency-input-field';
-import { nonEmptyArray } from 'check-types';
+import { Content, Dados,Receitas, Despesas, Resumo, } from './styles.js';
+
 
 export default function Home() {
   const { user, signOut } = useContext(AuthContext);
@@ -43,7 +42,14 @@ export default function Home() {
         label: "First dataset",
         data: despesasAgrupadas.map((e)=>{return e.total}),
         fill: true,
-        backgroundColor: despesasAgrupadas.map((e)=>{return getRandomColor()}),
+        backgroundColor: despesasAgrupadas.map((e)=>{
+          if(e.cor == null){
+            return getRandomColor()
+          }
+          else{
+            return e.cor
+          }
+        }),
         borderColor: "#cecece",
       },
       /*{
@@ -207,19 +213,21 @@ export default function Home() {
 
             if(!listaVazia){
                 let lista = [];
+                //insiro as informações das categorias em uma lista
                 snapshot.forEach((doc)=>{
                     lista.push({
                         id: doc.id,
                         nome: doc.data().nome,
+                        cor: doc.data().cor
                     })
                 });
                 
                 let listaAgrupada =[];
-                lista.forEach((item) =>{
+                lista.forEach((categoria) =>{
                   
                   let soma = 0;
 
-                  var listaFiltrada = pLista.filter(despesa => despesa.tipo == item.nome);
+                  var listaFiltrada = pLista.filter(despesa => despesa.tipo == categoria.nome);
 
                   listaFiltrada.forEach((obj)=>{
                     soma = soma + obj.valor;
@@ -227,7 +235,8 @@ export default function Home() {
 
                   if(soma>0){
                     listaAgrupada.push({
-                      categoria: item.nome,
+                      categoria: categoria.nome,
+                      cor: categoria.cor,
                       total: soma,
                     })
                   }

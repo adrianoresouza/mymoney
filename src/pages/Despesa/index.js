@@ -31,6 +31,7 @@ export default function Despesa() {
     const [novo, setNovo] = useState(true);
     const [saving, setSaving] = useState(false);
     const [despesa, setDespesa] = useState(null)
+    const [fixa, setFixa] = useState(false);
 
     useEffect(()=>{
         const d = new Date();
@@ -76,6 +77,7 @@ export default function Despesa() {
                     mes: data.getMonth()+1,
                     ano: data.getFullYear(),
                     idUsuario: user.uid,
+                    fixa: fixa
                 })
                 .then(()=>{
                     carregaDespesas(data.getMonth()+1);
@@ -83,37 +85,40 @@ export default function Despesa() {
                     setDescricao('');
                     setTipo('');
                     setValor(0);
+                    setFixa(false);
                     //setData(d);
                     setSaving(false);
                 })
-                }else{
-                    await firebase.firestore().collection('Despesas')
-                    .doc(despesa.id)
-                    .update({
-                        descricao: descricao,
-                        tipo: tipo,
-                        valor: Number(valor.replace(',','.')),
-                        data: data,
-                        dataformatada: data.toLocaleDateString(),
-                        mes: data.getMonth()+1,
-                        ano: data.getFullYear(),
-                    })
-                    .then(()=>{
-                        carregaDespesas(data.getMonth()+1);
-                        atualizaGrafico();
-                        setDescricao('');
-                        setTipo('');
-                        setValor(0);
-                        //setData(d);
-                        setLoading(false);
-                        setNovo(true);
-                    })
-                    .catch((error)=>{
-                        console.log(error);
-                        setLoading(false);
-                        setNovo(true);
-                    })
-                    setSaving(false);
+            }else{
+                await firebase.firestore().collection('Despesas')   
+                .doc(despesa.id)
+                .update({
+                    descricao: descricao,
+                    tipo: tipo,
+                    valor: Number(valor.toString().replace(',','.')),
+                    data: data,
+                    dataformatada: data.toLocaleDateString(),
+                    mes: data.getMonth()+1,
+                    ano: data.getFullYear(),
+                    fixa: fixa
+                })
+                .then(()=>{
+                    carregaDespesas(data.getMonth()+1);
+                    atualizaGrafico();
+                    setDescricao('');
+                    setTipo('');
+                    setValor(0);
+                    setFixa(false);
+                    //setData(d);
+                    setLoading(false);
+                    setNovo(true);
+                })
+                .catch((error)=>{
+                    console.log(error);
+                    setLoading(false);
+                    setNovo(true);
+                })
+                setSaving(false);
             }
         
     }
@@ -153,6 +158,7 @@ export default function Despesa() {
                     valor: doc.data().valor,
                     data: doc.data().data,
                     dataFormatada: format(doc.data().data.toDate(), 'dd/MM/yyyy'),
+                    fixa: doc.data().fixa
                 })
             })
             //setListaCategorias(listaCategorias => [...listaCategorias, ...lista])
@@ -172,6 +178,7 @@ export default function Despesa() {
         setTipo(despesa.tipo);
         setValor(despesa.valor);
         setData(new Date(despesa.data.toDate()));
+        setFixa(despesa.fixa);
     }
 
     async function handleDelete(despesa){
@@ -191,6 +198,10 @@ export default function Despesa() {
             setLoading(false);
         })
         
+    };
+
+    const handleCheckChange = () => {
+        setFixa(!fixa);
     }
     
  return (
@@ -217,6 +228,11 @@ export default function Despesa() {
                 </select>
                 <label>Valor (R$)</label>
                 <CurrencyInput prefix="R$" decimalSeparator="," groupSeparator="." value={valor} onValueChange={(value)=>setValor(value)} />
+                <label id="checkbox">
+                    <input type="checkbox" checked={fixa} onChange={handleCheckChange}/>
+                    Despesa fixa
+                </label>
+                
                 <button type="submit">Salvar</button>
             </form>
 

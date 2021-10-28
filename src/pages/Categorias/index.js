@@ -3,7 +3,8 @@ import firebase from '../../services/firebaseConnection';
 import Header from '../../components/Header';
 import Title from '../../components/Title';
 
-import { Content, TableCategorias, BtEditar } from './styles';
+import { Content, TableCategorias } from './styles';
+import { SketchPicker } from 'react-color';
 import { MdStyle } from 'react-icons/md';
 
 export default function Categorias() {
@@ -14,7 +15,9 @@ export default function Categorias() {
     const [loading, setLoading] = useState(true);
     const [novo, setNovo] = useState(true);
     const [saving, setSaving] = useState(false);
-    const [categoria, setCategoria] = useState(null)
+    const [categoria, setCategoria] = useState(null);
+    const [corSelecionada, setCorSelecionada]= useState('#FFF');
+    
 
     useEffect(()=>{
         carregaCategorias();
@@ -42,6 +45,7 @@ export default function Categorias() {
             .add({
                 nome: nome,
                 tipo: tipo,
+                cor: corSelecionada.hex,
             })
             .then(()=>{
                 carregaCategorias();
@@ -50,16 +54,19 @@ export default function Categorias() {
                 setSaving(false);
             })
         }else{
+            
             await firebase.firestore().collection('Categorias')
             .doc(categoria.id)
             .update({
                 nome: nome,
                 tipo: tipo,
+                cor: corSelecionada.hex,
             })
             .then(()=>{
                 carregaCategorias();
                 setNome('');
                 setTipo('');
+                setCorSelecionada('#FFF');
                 setLoading(false);
                 setNovo(true);
             })
@@ -84,6 +91,7 @@ export default function Categorias() {
                     id: doc.id,
                     nome: doc.data().nome,
                     tipo: doc.data().tipo,
+                    cor: doc.data().cor,
                 })
             })
             //setListaCategorias(listaCategorias => [...listaCategorias, ...lista])
@@ -100,6 +108,7 @@ export default function Categorias() {
         setCategoria(categoria);
         setNome(categoria.nome);
         setTipo(categoria.tipo);
+        setCorSelecionada(categoria.cor);
     }
 
     async function handleDelete(categoria){
@@ -109,6 +118,7 @@ export default function Categorias() {
         .then(()=>{
             setNovo(true);
             setNome('');
+            setCorSelecionada('#FFF');
             setCategoria(null);
             carregaCategorias();
             //setLoading(false);
@@ -138,6 +148,7 @@ export default function Categorias() {
                     <option key={'Receita'}>Receita</option>
                     <option key={'Despesa'}>Despesa</option>
                 </select>
+                <SketchPicker color={corSelecionada} onChangeComplete={(value)=>setCorSelecionada(value)}/>
                 <button type="submit">Salvar</button>
             </form>
 
