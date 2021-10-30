@@ -179,6 +179,7 @@ export default function Despesa() {
         setValor(despesa.valor);
         setData(new Date(despesa.data.toDate()));
         setFixa(despesa.fixa);
+        window.scrollTo(0,0);
     }
 
     async function handleDelete(despesa){
