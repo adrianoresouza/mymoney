@@ -16,6 +16,7 @@ import Title from '../../components/Title';
 
 import { Content, TableCategorias, BtEditar } from './styles';
 import { MdStyle } from 'react-icons/md';
+import { deepOrange } from '@material-ui/core/colors';
 
 export default function Despesa() {
     const { user } = useContext(AuthContext);
@@ -51,12 +52,18 @@ export default function Despesa() {
     },[data])
 
     async function carregaDespesas(pMes){
-        console.log(user);
+
+        const despesasFixasSnapshot = await firebase.firestore().collection('Despesas').where('fixa','==', true).orderBy('data', 'desc')
+        .where('idUsuario', '==', user.uid)
+        .get();
+
+        console.log('num despesas fixas: '+ despesasFixasSnapshot.size);
+
         await firebase.firestore().collection('Despesas').where('mes','==',pMes).orderBy('data', 'desc')
         .where('idUsuario', '==', user.uid)
         .get()
         .then((snapshot)=>{
-            updateState(snapshot);
+            updateState(snapshot, despesasFixasSnapshot);
         })
         .catch((error)=>{console.log(error)});
 
@@ -144,14 +151,18 @@ export default function Despesa() {
         })
     }
 
-    async function updateState(snapshot){
-        const listaVazia = snapshot.size===0;
+    async function updateState(snapshot, snapshotFixas){
+        
+        const listaFixas=[];
+        const lista = [];
 
-        if(!listaVazia){
-            let lista = [];
-            snapshot.forEach((doc)=>{
-                console.log(doc.id);
-                lista.push({
+        const listaVazia = snapshot.size===0;
+        const listaFixasVazia = snapshotFixas.size===0;
+
+        if(!listaFixasVazia){
+            
+            snapshotFixas.forEach((doc)=>{
+                listaFixas.push({
                     id: doc.id,
                     descricao: doc.data().descricao,
                     tipo: doc.data().tipo,
@@ -161,17 +172,52 @@ export default function Despesa() {
                     fixa: doc.data().fixa
                 })
             })
+        }
+
+        if(!listaVazia){
+            
+            snapshot.forEach((doc)=>{
+                
+                let index = listaFixas.findIndex((desp)=>{
+                        return desp.descricao === doc.data().descricao && desp.valor === doc.data().valor && desp.tipo === doc.data().tipo;
+                });
+                    
+               
+
+                if(index <0){
+                    lista.push({
+                        id: doc.id,
+                        descricao: doc.data().descricao,
+                        tipo: doc.data().tipo,
+                        valor: doc.data().valor,
+                        data: doc.data().data,
+                        dataFormatada: format(doc.data().data.toDate(), 'dd/MM/yyyy'),
+                        fixa: doc.data().fixa
+                    });
+                };
+
+                
+            })
             //setListaCategorias(listaCategorias => [...listaCategorias, ...lista])
             setListaDespesas(lista);
             setListaVazia(false);
+
         }else{
             setListaVazia(true);
         };
+
+        if(listaVazia && listaFixasVazia){
+            setListaVazia(true);
+        }
+
+        //arrayDespesas = [...listaFixas,...lista];
+
+        setListaDespesas([...listaFixas,...lista]);
     }
 
     
     async function handleEditar(despesa){
-        console.log(despesa);
+        
         setNovo(false);
         setDespesa(despesa);
         setDescricao(despesa.descricao);

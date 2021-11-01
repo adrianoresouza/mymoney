@@ -164,7 +164,7 @@ export default function Home() {
                 })
                 somaReceitas = somaReceitas + doc.data().valor;
             })
-            console.log(lista);
+            
             setListaReceitas(lista);
             setExisteReceitas(true);
             setTotalReceitas('R$' + somaReceitas.toFixed(2));
@@ -243,7 +243,7 @@ export default function Home() {
                   
                 });
 
-                console.log(listaAgrupada);
+                
                 setDespesasAgrupadas(listaAgrupada);
             }else{
               setDespesasAgrupadas([]);
@@ -261,7 +261,7 @@ export default function Home() {
       setMesAtual(monthNames[index+1]);
       carregaReceitas(index+2);
       carregaDespesas(index+2);
-      console.log(index+2);
+      
     }
     if(direcao==="before"){
       let index = monthNames.findIndex(mes => mes === mesAtual);
@@ -272,7 +272,7 @@ export default function Home() {
       setMesAtual(monthNames[index-1]);
       carregaReceitas(index);
       carregaDespesas(index);
-      console.log(index);
+      
     }
   }
 
@@ -335,7 +335,7 @@ export default function Home() {
                 </thead>
                 <tbody>
                 {despesasAgrupadas.map((item, index)=>{
-                //console.log(item);
+                
                 return(
                     <tr key={index}>
                         <td data-label="Nome">{item.categoria}</td>
@@ -371,7 +371,7 @@ export default function Home() {
               <tbody>
                 
               {listaReceitas.map((item, index)=>{
-                //console.log(item);
+               
                 return(
                     <tr key={index}>
                         <td data-label="Descrição">{item.descricao}</td>

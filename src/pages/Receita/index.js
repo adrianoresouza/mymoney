@@ -45,6 +45,7 @@ export default function Receita() {
 
 
     useEffect(()=>{
+        
         if(data!==null){
             let mes = data.getMonth()+1;
             carregaReceitas(mes);
@@ -65,7 +66,7 @@ export default function Receita() {
 
     async function handleSubmit(e){
         setSaving(true);
-        
+        let dataSelecionada = data;
         e.preventDefault();
             if(novo){
                 await firebase.firestore().collection('Receitas')
@@ -85,7 +86,7 @@ export default function Receita() {
                 setDescricao('');
                 setTipo('');
                 setValor(0);
-                setData('');
+                setData(dataSelecionada);
                 setSaving(false);
             })
         }else{
@@ -106,7 +107,7 @@ export default function Receita() {
                 setDescricao('');
                 setTipo('');
                 setValor(0);
-                setData('');
+                setData(dataSelecionada);
                 setLoading(false);
                 setNovo(true);
             })
@@ -146,7 +147,7 @@ export default function Receita() {
         if(!listaVazia){
             let lista = [];
             snapshot.forEach((doc)=>{
-                console.log(doc.id);
+                
                 lista.push({
                     id: doc.id,
                     descricao: doc.data().descricao,
@@ -166,7 +167,7 @@ export default function Receita() {
 
     
     async function handleEditar(receita){
-        console.log(receita);
+        
         setNovo(false);
         setReceita(receita);
         setDescricao(receita.descricao);

@@ -86,7 +86,7 @@ export default function Categorias() {
         if(!listaVazia){
             let lista = [];
             snapshot.forEach((doc)=>{
-                console.log(doc.id);
+                
                 lista.push({
                     id: doc.id,
                     nome: doc.data().nome,

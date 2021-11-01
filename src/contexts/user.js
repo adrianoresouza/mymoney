@@ -83,7 +83,7 @@ function AuthProvider({children}){
     }
 
     function storageUser(data){
-        console.log(data);
+       
         localStorage.setItem('SistemaUser', JSON.stringify(data));
         
     }

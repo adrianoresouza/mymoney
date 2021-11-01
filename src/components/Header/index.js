@@ -39,8 +39,7 @@ const { totalReceitas, totalDespesas, calculando } = useContext(ResumoContext);
     },
   }
 
-  console.log(totalReceitas);
-  console.log(totalDespesas);
+
 
   const data = [
     {tipo: 'Receita', valor: Number.parseFloat(totalReceitas)},
