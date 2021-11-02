@@ -243,6 +243,7 @@ export default function Home() {
                   
                 });
 
+                listaAgrupada = listaAgrupada.sort((a, b)=> b.total - a.total); 
                 
                 setDespesasAgrupadas(listaAgrupada);
             }else{
