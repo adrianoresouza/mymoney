@@ -57,8 +57,6 @@ export default function Despesa() {
         .where('idUsuario', '==', user.uid)
         .get();
 
-        console.log('num despesas fixas: '+ despesasFixasSnapshot.size);
-
         await firebase.firestore().collection('Despesas').where('mes','==',pMes).orderBy('data', 'desc')
         .where('idUsuario', '==', user.uid)
         .get()
@@ -179,6 +177,7 @@ export default function Despesa() {
             snapshot.forEach((doc)=>{
                 
                 let index = listaFixas.findIndex((desp)=>{
+                    
                         return desp.descricao === doc.data().descricao && desp.valor === doc.data().valor && desp.tipo === doc.data().tipo;
                 });
                     
@@ -202,17 +201,16 @@ export default function Despesa() {
             setListaDespesas(lista);
             setListaVazia(false);
 
-        }else{
-            setListaVazia(true);
-        };
-
-        if(listaVazia && listaFixasVazia){
-            setListaVazia(true);
         }
 
-        //arrayDespesas = [...listaFixas,...lista];
+        if(listaVazia && listaFixasVazia){            
+            setListaVazia(true);
+        }
+        
 
-        setListaDespesas([...listaFixas,...lista]);
+        //arrayDespesas = [...listaFixas,...lista];
+        const listaRetorno = [...listaFixas,...lista];
+        setListaDespesas(listaRetorno);
     }
 
     
