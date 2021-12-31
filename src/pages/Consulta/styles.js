@@ -10,24 +10,24 @@ export const Content = styled.div`
     border-radius: 5px;
     background-color: #cecece;
     padding: .8em;
-    height: -webkit-fill-available;
+    height: 100%;
     
     label{
-        margin-bottom: 5px;
+        margin-bottom: 5px; 
         margin-top: 10px
     }
 
-    input[type=text]{
+    .input{
         padding: 5px;
+        margin-bottom: 10px;
+        border: none;
+        border-radius: 3px;
+        height: 36px;
     }
 
     input[type=checkbox]{
         padding: 5px;
         margin-right: 5px;
-    }
-
-    select{
-        padding: 5px;
     }
 
     .DatePicker{

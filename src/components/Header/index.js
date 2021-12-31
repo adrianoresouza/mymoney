@@ -3,7 +3,7 @@ import { AuthContext } from '../../contexts/user';
 import { ResumoContext } from '../../contexts/resumo';
 import { Link } from 'react-router-dom';
 import {GiReceiveMoney, GiPayMoney} from 'react-icons/gi';
-import { FaChartLine } from 'react-icons/fa';
+import { FaChartLine, FaSearchDollar } from 'react-icons/fa';
 import {BsListCheck} from 'react-icons/bs';
 import { ImExit } from 'react-icons/im';
 
@@ -65,6 +65,10 @@ const { totalReceitas, totalDespesas, calculando } = useContext(ResumoContext);
     <Link to="/home">
       <FaChartLine size={25}/>
       Dashboard
+    </Link>
+    <Link to="/consulta">
+      <FaSearchDollar size={25}/>
+      Consultas
     </Link>
     <a onClick={()=>handleLogOut()}>
       <ImExit size={25}/>

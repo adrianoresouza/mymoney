@@ -197,7 +197,7 @@ export default function Receita() {
     }
     
  return (
-   <div>
+   <div style={{height: "inherit"}}>
        <Header/>
 
        <Title name="Incluir Receita">

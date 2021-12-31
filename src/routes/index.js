@@ -10,6 +10,7 @@ import Home from '../pages/Home';
 import Categorias from '../pages/Categorias';
 import Receita from '../pages/Receita/index.js';
 import Despesa from '../pages/Despesa';
+import Consulta from '../pages/Consulta';
 
 
 export default function Routes(){
@@ -21,6 +22,7 @@ export default function Routes(){
             <Route exact path="/categorias" component={Categorias} isPrivate/>
             <Route exact path="/receita" component={Receita} isPrivate/>
             <Route exact path="/despesas" component={Despesa} isPrivate/>
+            <Route exact path="/consulta" component={Consulta} isPrivate/>
         </Switch>
     )
 }
