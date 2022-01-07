@@ -9,7 +9,7 @@ import { format } from 'date-fns';
 //import DatePicker from '@bit/lekanmedia.shared-ui.date-picker';
 import DatePicker from 'react-date-picker'
 import CurrencyInput from 'react-currency-input-field';
-
+import Select from 'react-select';
 
 import Header from '../../components/Header';
 import Title from '../../components/Title';
@@ -22,7 +22,7 @@ export default function Receita() {
     const { atualizaGrafico } = useContext(ResumoContext);
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
-    const [tipo, setTipo] = useState('Receita');
+    const [tipo, setTipo] = useState(null);
     const [valor, setValor] = useState(0.0);
     const [data, setData] = useState(new Date());
     const [listaReceitas, setListaReceitas] = useState([]);
@@ -72,7 +72,7 @@ export default function Receita() {
                 await firebase.firestore().collection('Receitas')
             .add({
                 descricao: descricao,
-                tipo: tipo,
+                tipo: tipo.value,
                 valor: Number(valor.replace(',','.')),
                 data: data,
                 dataformatada: data.toLocaleDateString(),
@@ -94,7 +94,7 @@ export default function Receita() {
             .doc(receita.id)
             .update({
                 descricao: descricao,
-                tipo: tipo,
+                tipo: tipo.value,
                 valor: Number(valor.replace(',','.')),
                 data: data,
                 dataformatada: new Date(data),
@@ -132,8 +132,8 @@ export default function Receita() {
                 let lista = [];
                 snapshot.forEach((doc)=>{
                     lista.push({
-                        id: doc.id,
-                        nome: doc.data().nome,
+                        value: doc.data().nome,
+                        label: doc.data().nome,
                     })
                 })
                 setListaCategorias(lista);
@@ -171,7 +171,11 @@ export default function Receita() {
         setNovo(false);
         setReceita(receita);
         setDescricao(receita.descricao);
-        setTipo(receita.tipo);
+        let tipoSelecionado ={
+            value: receita.tipo,
+            label: receita.tipo,
+        }
+        setTipo(tipoSelecionado);
         setValor(receita.valor);
         setData(new Date(receita.data.toDate()));
     }
@@ -207,19 +211,15 @@ export default function Receita() {
        <Content>
             <form className="form-cadastro" onSubmit={handleSubmit}>
                 <label>Descrição</label>
-                <input type="text" value={descricao} onChange={(e)=>{setDescricao(e.target.value)}}/>
+                <input type="text" className="input" value={descricao} onChange={(e)=>{setDescricao(e.target.value)}}/>
                 <label>Data</label> 
-                <DatePicker value={data} onChange={setData} className="DatePicker" format="dd/MM/yyyy"/>
+                <DatePicker className="SeletorData" value={data} onChange={setData} format="dd/MM/yyyy"/>
                 <label>Categoria</label>
-                <select value={tipo} onChange={(e)=>{setTipo(e.target.value)}}>
-                    {listaCategorias.map((categ, index)=>{
-                        return(
-                            <option key={index}>{categ.nome}</option>
-                        )
-                    })}
-                </select>
+                <Select value={tipo} placeholder="Selecione..." className="select" onChange={setTipo} options={listaCategorias}/>
+                    
+              
                 <label>Valor (R$)</label>
-                <CurrencyInput prefix="R$" decimalSeparator="," groupSeparator="." value={valor} onValueChange={(value)=>setValor(value)} />
+                <CurrencyInput className="input" prefix="R$" decimalSeparator="," groupSeparator="." value={valor} onValueChange={(value)=>setValor(value)} />
                 <button type="submit">Salvar</button>
             </form>
 

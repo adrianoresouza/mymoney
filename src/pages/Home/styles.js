@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
+export const SuperDiv = styled.div`
+    height: -webkit-fill-available;
+`;
+
 export const Content = styled.div`
-    
+    height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
     justify-content: center;

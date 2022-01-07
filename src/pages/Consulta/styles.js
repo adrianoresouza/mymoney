@@ -10,7 +10,7 @@ export const Content = styled.div`
     border-radius: 5px;
     background-color: #cecece;
     padding: .8em;
-    height: 100%;
+    height: -webkit-fill-available;
     
     label{
         margin-bottom: 5px; 
@@ -18,11 +18,17 @@ export const Content = styled.div`
     }
 
     .input{
-        padding: 5px;
+        padding-left: 10px;
         margin-bottom: 10px;
         border: none;
         border-radius: 3px;
         height: 36px;
+        font-size: 1em;
+        
+        ::placeholder{
+            color: #808080;
+        }
+
     }
 
     input[type=checkbox]{

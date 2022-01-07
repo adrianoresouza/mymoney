@@ -18,16 +18,27 @@ export const Content = styled.div`
         margin-top: 10px
     }
 
-    input[type=text]{
-        padding: 5px;
+    .input{
+        padding: 10px 5px;
+        height: 36px;
+        border: none;
+        border-radius: 3px;
+        height: 36px;
+        font-size: 1em;
     }
 
-    select{
-        padding: 5px;
+    .select{
+        padding: -5px;
     }
 
-    .DatePicker{
+   
+
+    .react-date-picker__wrapper{
         background-color: white;
+        border: none;
+        height: 36px;
+        border-radius: 3px;
+        padding-left: 5px;
     }
 
     button[type=submit]{

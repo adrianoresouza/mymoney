@@ -9,6 +9,7 @@ import { format } from 'date-fns';
 //import DatePicker from '@bit/lekanmedia.shared-ui.date-picker';
 import DatePicker from 'react-date-picker'
 import CurrencyInput from 'react-currency-input-field';
+import Select from 'react-select';
 
 
 import Header from '../../components/Header';
@@ -22,7 +23,7 @@ export default function Despesa() {
     const { user } = useContext(AuthContext);
     const { atualizaGrafico } = useContext(ResumoContext);
     const [descricao, setDescricao] = useState('');
-    const [tipo, setTipo] = useState('');
+    const [tipo, setTipo] = useState(null);
     const [valor, setValor] = useState(0);
     const [data, setData] = useState(new Date());
     const [listaDespesas, setListaDespesas] = useState([]);
@@ -75,7 +76,7 @@ export default function Despesa() {
                 await firebase.firestore().collection('Despesas')
                 .add({
                     descricao: descricao,
-                    tipo: tipo,
+                    tipo: tipo.value,
                     valor: Number(valor.replace(',','.')),
                     data: data,
                     dataformatada: data.toLocaleDateString(),
@@ -99,7 +100,7 @@ export default function Despesa() {
                 .doc(despesa.id)
                 .update({
                     descricao: descricao,
-                    tipo: tipo,
+                    tipo: tipo.value,
                     valor: Number(valor.toString().replace(',','.')),
                     data: data,
                     dataformatada: data.toLocaleDateString(),
@@ -139,8 +140,8 @@ export default function Despesa() {
                 let lista = [];
                 snapshot.forEach((doc)=>{
                     lista.push({
-                        id: doc.id,
-                        nome: doc.data().nome,
+                        value: doc.id,
+                        label: doc.data().nome,
                     })
                 })
                 setListaCategorias(lista);
@@ -215,11 +216,15 @@ export default function Despesa() {
 
     
     async function handleEditar(despesa){
-        
+        console.log(despesa.tipo);
         setNovo(false);
         setDespesa(despesa);
         setDescricao(despesa.descricao);
-        setTipo(despesa.tipo);
+        let tipoSelecionado ={
+            value: despesa.tipo,
+            label: despesa.tipo,
+        }
+        setTipo(tipoSelecionado);
         setValor(despesa.valor);
         setData(new Date(despesa.data.toDate()));
         setFixa(despesa.fixa);
@@ -260,19 +265,14 @@ export default function Despesa() {
        <Content className="content">
             <form className="form-cadastro" onSubmit={handleSubmit}>
                 <label>Descrição</label>
-                <input type="text" value={descricao} onChange={(e)=>{setDescricao(e.target.value)}}/>
+                <input className="input" type="text" value={descricao} onChange={(e)=>{setDescricao(e.target.value)}}/>
                 <label>Data</label> 
                 <DatePicker value={data} onChange={setData} className="DatePicker" format="dd/MM/yyyy"/>
                 <label>Categoria</label>
-                <select value={tipo} onChange={(e)=>{setTipo(e.target.value)}}>
-                    {listaCategorias.map((categ, index)=>{
-                        return(
-                            <option key={index}>{categ.nome}</option>
-                        )
-                    })}
-                </select>
+                <Select value={tipo} onChange={setTipo} options={listaCategorias}/>
+                    
                 <label>Valor (R$)</label>
-                <CurrencyInput prefix="R$" decimalSeparator="," groupSeparator="." value={valor} onValueChange={(value)=>setValor(value)} />
+                <CurrencyInput className="input" prefix="R$" decimalSeparator="," groupSeparator="." value={valor} onValueChange={(value)=>setValor(value)} />
                 <label id="checkbox">
                     <input type="checkbox" checked={fixa} onChange={handleCheckChange}/>
                     Despesa fixa

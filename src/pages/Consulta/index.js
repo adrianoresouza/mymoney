@@ -3,7 +3,7 @@ import { AuthContext } from '../../contexts/user';
 import { ResumoContext } from '../../contexts/resumo';
 import firebase from '../../services/firebaseConnection';
 import { MdStyle } from 'react-icons/md';
-import Select from 'react-select'
+import Select from 'react-select';
 import { format } from 'date-fns';
 
 import Header from '../../components/Header';

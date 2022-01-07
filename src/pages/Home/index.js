@@ -10,7 +10,7 @@ import {GiReceiveMoney, GiPayMoney} from 'react-icons/gi';
 import Header from '../../components/Header';
 import Title from '../../components/Title';
 
-import { Content, Dados,Receitas, Despesas, Resumo, } from './styles.js';
+import { Content, Dados,Receitas, Despesas, Resumo, SuperDiv} from './styles.js';
 
 
 export default function Home() {
@@ -278,7 +278,7 @@ export default function Home() {
   }
 
  return (
-  <div>
+  <SuperDiv>
     
       <Header/>
       <Title name="Dashboard">
@@ -399,6 +399,6 @@ export default function Home() {
           <GiPayMoney size={30}/>
         </Link>
       </Content>
-   </div>
+   </SuperDiv>
  );
 }
