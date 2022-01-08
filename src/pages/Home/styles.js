@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 
 export const SuperDiv = styled.div`
+
     height: -webkit-fill-available;
+    min-height: -webkit-fill-available;
 `;
 
 export const Content = styled.div`
+    min-height: -webkit-fill-available;
     height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
@@ -124,7 +127,7 @@ export const Content = styled.div`
     
 
     @media screen and (max-width: 700px){
-        height: 100%;
+        min-height: -webkit-fill-available;
         margin-left: 10px;
         flex-direction: column;
         justify-content: flex-start;
