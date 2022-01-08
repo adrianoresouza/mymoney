@@ -1,6 +1,7 @@
 .container-center{
     display: flex;
-    height: 100%;
+    box-sizing:  border-box;
+    height: -webkit-fill-available;
     background-color: #F57B3F;
     align-items: center;
     justify-content: center;

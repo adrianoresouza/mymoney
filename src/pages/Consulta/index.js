@@ -77,27 +77,51 @@ export default function Consulta() {
 
     async function carregaDespesas(e){
         e.preventDefault();
-        setLoading(true);
-        console.log(mesSelecionado.value.toString());
-        console.log(tipoSelecionado.label.toString());
-        console.log(anoSelecionado.toString());
-        console.log(user.uid);
-        if(mesSelecionado !== undefined && anoSelecionado !== undefined && tipoSelecionado !== undefined){
-            await firebase.firestore().collection('Despesas').where('mes','==',parseInt(mesSelecionado.value)).orderBy('data', 'desc')
-            .where('idUsuario', '==', user.uid)
-            .where('tipo','==',tipoSelecionado.label.toString())
-            .where('ano','==',parseInt(anoSelecionado))
+        if(mesSelecionado!==null && anoSelecionado!=='' && tipoSelecionado!==null){
+            setLoading(true);
+            setListaVazia(false);
+            let lista = [];
+            await firebase.firestore().collection('Despesas').where('usuario', '==', user.uid)
+            .where('mes', '==', mesSelecionado)
+            .where('ano', '==', anoSelecionado)
+            .where('tipo', '==', tipoSelecionado)
             .get()
             .then((snapshot)=>{
-                updateState(snapshot);
+                snapshot.forEach((doc)=>{
+                    lista.push({
+                        id: doc.id,
+                        data: doc.data(),
+                    })
+                })
+                setListaDespesas(lista);
+                setLoading(false);
             })
-            .catch((error)=>{console.log(error)});
+            .catch((error)=>{console.log(error)})
+        }else{
+            alert('Preencha todos os campos');
+        }
+        // e.preventDefault();
+        // setLoading(true);
+        // console.log(mesSelecionado.value.toString());
+        // console.log(tipoSelecionado.label.toString());
+        // console.log(anoSelecionado.toString());
+        // console.log(user.uid);
+        // if(mesSelecionado !== undefined && anoSelecionado !== undefined && tipoSelecionado !== undefined){
+        //     await firebase.firestore().collection('Despesas').where('mes','==',parseInt(mesSelecionado.value)).orderBy('data', 'desc')
+        //     .where('idUsuario', '==', user.uid)
+        //     .where('tipo','==',tipoSelecionado.label.toString())
+        //     .where('ano','==',parseInt(anoSelecionado))
+        //     .get()
+        //     .then((snapshot)=>{
+        //         updateState(snapshot);
+        //     })
+        //     .catch((error)=>{console.log(error)});
 
-            setLoading(false);
-        }
-        else{
-            alert('Selecione corretamente os campos');
-        }
+        //     setLoading(false);
+        // }
+        // else{
+        //     alert('Selecione corretamente os campos');
+        // }
     }
 
     async function updateState(snapshot){

@@ -103,7 +103,7 @@ export default function Home() {
             let lista = [];
             let somaDespesas = 0;
             snapshot.forEach((doc)=>{
-              
+                
                 lista.push({
                   id: doc.id,
                   ano: doc.data().ano,
@@ -164,7 +164,7 @@ export default function Home() {
                 })
                 somaReceitas = somaReceitas + doc.data().valor;
             })
-            
+            console.log(lista);
             setListaReceitas(lista);
             setExisteReceitas(true);
             setTotalReceitas('R$' + somaReceitas.toFixed(2));
@@ -222,6 +222,7 @@ export default function Home() {
                     })
                 });
                 
+                
                 let listaAgrupada =[];
                 lista.forEach((categoria) =>{
                   
@@ -242,7 +243,7 @@ export default function Home() {
                   }
                   
                 });
-
+                console.log(listaAgrupada);
                 listaAgrupada = listaAgrupada.sort((a, b)=> b.total - a.total); 
                 
                 setDespesasAgrupadas(listaAgrupada);
@@ -351,7 +352,7 @@ export default function Home() {
           ) : (<> </>) }
 
 
-          {existeReceitas ? (
+          {/* {existeReceitas ? (
             <Receitas>
               <h3>Receitas</h3>
             <table>
@@ -372,7 +373,7 @@ export default function Home() {
               <tbody>
                 
               {listaReceitas.map((item, index)=>{
-               
+               console.log(item);
                 return(
                     <tr key={index}>
                         <td data-label="Descrição">{item.descricao}</td>
@@ -385,7 +386,7 @@ export default function Home() {
               </tbody>
             </table>
           </Receitas>
-          ):(<></>)}
+          ):(<></>)} */}
         <div className="chart">
           <Pie data={data}/>
         </div>

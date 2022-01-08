@@ -77,7 +77,7 @@ export default function Despesa() {
                 .add({
                     descricao: descricao,
                     tipo: tipo.value,
-                    valor: Number(valor.replace(',','.')),
+                    valor: Number(valor.toString().replace(',','.')),
                     data: data,
                     dataformatada: data.toLocaleDateString(),
                     mes: data.getMonth()+1,
@@ -140,7 +140,7 @@ export default function Despesa() {
                 let lista = [];
                 snapshot.forEach((doc)=>{
                     lista.push({
-                        value: doc.id,
+                        value: doc.data().nome,
                         label: doc.data().nome,
                     })
                 })

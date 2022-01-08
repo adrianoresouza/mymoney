@@ -73,7 +73,7 @@ export default function Receita() {
             .add({
                 descricao: descricao,
                 tipo: tipo.value,
-                valor: Number(valor.replace(',','.')),
+                valor: Number(valor.toString().replace(',','.')),
                 data: data,
                 dataformatada: data.toLocaleDateString(),
                 mes: data.getMonth()+1,
@@ -95,7 +95,7 @@ export default function Receita() {
             .update({
                 descricao: descricao,
                 tipo: tipo.value,
-                valor: Number(valor.replace(',','.')),
+                valor: Number(valor.toString().replace(',','.')),
                 data: data,
                 dataformatada: new Date(data),
                 mes: data.getMonth()+1,
