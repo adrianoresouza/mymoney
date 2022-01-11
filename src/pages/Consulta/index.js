@@ -62,7 +62,7 @@ export default function Consulta() {
                 let lista = [];
                 snapshot.forEach((doc)=>{
                     lista.push({
-                        value: doc.id,
+                        value: doc.data().nome,
                         label: doc.data().nome,
                     })
                 })
@@ -78,25 +78,21 @@ export default function Consulta() {
     async function carregaDespesas(e){
         e.preventDefault();
         if(mesSelecionado!==null && anoSelecionado!=='' && tipoSelecionado!==null){
+            console.log(mesSelecionado, anoSelecionado, tipoSelecionado);
             setLoading(true);
             setListaVazia(false);
             let lista = [];
-            await firebase.firestore().collection('Despesas').where('usuario', '==', user.uid)
-            .where('mes', '==', mesSelecionado)
-            .where('ano', '==', anoSelecionado)
-            .where('tipo', '==', tipoSelecionado)
+            await firebase.firestore().collection('Despesas').where('mes','==',parseInt(mesSelecionado.value)).orderBy('data', 'desc')
+            .where('idUsuario', '==', user.uid)
+            .where('tipo','==',tipoSelecionado.label.toString())
+            .where('ano','==',parseInt(anoSelecionado))
             .get()
             .then((snapshot)=>{
-                snapshot.forEach((doc)=>{
-                    lista.push({
-                        id: doc.id,
-                        data: doc.data(),
-                    })
-                })
-                setListaDespesas(lista);
-                setLoading(false);
+                updateState(snapshot);
             })
-            .catch((error)=>{console.log(error)})
+            .catch((error)=>{console.log(error)});
+
+            setLoading(false);
         }else{
             alert('Preencha todos os campos');
         }
@@ -130,6 +126,8 @@ export default function Consulta() {
         const lista = [];
 
         const ListaVazia = snapshot.size===0;
+
+        console.log(ListaVazia);
         setListaVazia(ListaVazia);
         
         if(!ListaVazia){
@@ -150,7 +148,7 @@ export default function Consulta() {
 
                 
             })
-            console.log(lista);
+            
             //setListaCategorias(listaCategorias => [...listaCategorias, ...lista])
             setListaDespesas(lista);
             
