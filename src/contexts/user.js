@@ -60,6 +60,7 @@ function AuthProvider({children}){
         await firebase.auth().signInWithEmailAndPassword(email, password)
         .then( async ( value )=>{
             let uid = value.user.uid;
+            //let uid = 'i1znSsjVTmSgljyF3Qt3DmXRVtF2';
 
             const userProfile = await firebase.firestore().collection('users')
             .doc(uid).get();

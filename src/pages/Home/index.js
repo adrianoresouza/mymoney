@@ -98,6 +98,7 @@ export default function Home() {
         .get()
         .then((snapshot)=>{
           const listaVazia = snapshot.size===0;
+          console.log(listaVazia);
           if(!listaVazia){
             
             let lista = [];
@@ -127,6 +128,7 @@ export default function Home() {
             setExisteDespesas(false);
             setSomaDespesas(0);
             setTotalDespesas('R$'+0);
+            setDespesasAgrupadas([]);
             //despesasCategoria(lista);
           }
         })

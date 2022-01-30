@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const SuperDiv = styled.div`
-
+    overflow: auto;
+    -webkit-overflow-scrolling: hidden;
     height: -webkit-fill-available;
     min-height: -webkit-fill-available;
 `;
@@ -9,7 +10,8 @@ export const SuperDiv = styled.div`
 export const Content = styled.div`
     min-height: -webkit-fill-available;
     height: -webkit-fill-available;
-    display: flex;
+    overflow: auto;
+    display: block;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -36,6 +38,7 @@ export const Content = styled.div`
             outline: 0;
             margin: -2px 10px;
             transition: 0.2s;
+            border-radius: 50%;
         }
 
         button:hover{
@@ -307,6 +310,8 @@ export const Receitas = styled.div`
 
 
 export const Despesas = styled.div`
+    overflow-y: auto;
+    max-height: 600px;
     background-color: #fff;
     border:2px solid  #F57B3F;
     border-radius: 7px;
