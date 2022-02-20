@@ -19,8 +19,8 @@ export const Content = styled.div`
     margin-left: 210px;
     margin-top: 10px;
     margin-right: 10px;
-    border-radius: 5px;
-    background-color: #cecece;
+    border-radius: 2px;
+    background-color: #F0F3F4;
     padding: .8em;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     
