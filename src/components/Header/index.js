@@ -9,6 +9,7 @@ import { ImExit } from 'react-icons/im';
 
 import { VictoryChart ,VictoryBar, VictoryLabel ,VictoryTheme, VictoryAxis, VictoryContainer } from 'victory';
 
+
 import './header.css';
 
 export default function Header() {
@@ -74,6 +75,8 @@ const { totalReceitas, totalDespesas, calculando } = useContext(ResumoContext);
       <ImExit size={25}/>
       Sair
     </a>
+
+    
     
     <div className="chart-header">
 
