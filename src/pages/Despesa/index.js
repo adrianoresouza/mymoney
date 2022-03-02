@@ -255,7 +255,7 @@ export default function Despesa() {
     }
     
  return (
-   <div>
+   <div style={    {height: '-webkit-fill-available'}}>
        <Header/>
 
        <Title name="Incluir Despesa">

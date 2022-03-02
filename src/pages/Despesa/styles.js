@@ -8,7 +8,7 @@ export const Content = styled.div`
     margin-top: 10px;
     margin-right: 10px;
     border-radius: 5px;
-    background-color: #cecece;
+    background-color: #F0F3F4;;
     padding: .8em;
     height: -webkit-fill-available;
     

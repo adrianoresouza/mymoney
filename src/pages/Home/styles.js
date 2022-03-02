@@ -26,7 +26,9 @@ export const Content = styled.div`
     
     .mes{
         margin: 15px auto;
-        display: flex;
+        width: 100%;
+        display: inline-flex;
+        justify-content: center;
         flex-direction: row;
         justify-content: center;
         align-content: center;
@@ -158,7 +160,7 @@ export const Dados = styled.div`
 
     .chart{
 
-        border: 2px solid #F57B3F;
+        /* border: 2px solid #F57B3F; */
         border-radius: 10px ;
         background-color: #FFF;
         width: 45%;
@@ -170,13 +172,19 @@ export const Dados = styled.div`
             width: 20em;
             
         }
+
+        @media screen and (max-width: 1020px){
+            margin-top: 15px;
+            width: 20em;
+            
+        }
     }
 `;
 
 export const Resumo = styled.div`
     display: flex;
     flex-direction: column;
-    border:2px solid  #F57B3F;
+    /* border:2px solid  #F57B3F; */
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     width: 150px;
     background-color: #fff;
@@ -237,7 +245,7 @@ export const Resumo = styled.div`
 export const Receitas = styled.div`
     display: none;
     background-color: #fff;
-    border:2px solid  #F57B3F;
+    /* border:2px solid  #F57B3F; */
     border-radius: 7px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     
@@ -313,7 +321,7 @@ export const Despesas = styled.div`
     overflow-y: auto;
     max-height: 600px;
     background-color: #fff;
-    border:2px solid  #F57B3F;
+    /* border:2px solid  #F57B3F; */
     border-radius: 7px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     margin: 5px 10px;
