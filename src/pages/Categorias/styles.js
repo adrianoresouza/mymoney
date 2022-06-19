@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-export const Content = styled.div`
+
+export const Content = styled.div`  
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,28 +10,36 @@ export const Content = styled.div`
     margin-top: 10px;
     margin-right: 10px;
     border-radius: 5px;
-    background-color: #cecece;
+    background-color: #F0F3F4;
     padding: .8em;
-    
-    form{
+
+    #seletorCor{
+        display: flex;
         justify-content: center;
-        align-items: center;
-        label{
-            align-self: flex-start;
-        }
-    }
-    input{
-        padding: 5px;
-        width: 100%;
-        margin: 10px 0;
-        
     }
 
-    select{
-        padding: 5px;
-        margin: 10px 0;
-        width: 100%;
+    label{
+        margin-bottom: 5px;
+        margin-top: 10px;
+        align-self: start;
     }
+    
+    form{
+        display: flex;
+        justify-content: center;
+        .sketch-picker{
+            width: 100%;
+        }
+    }
+
+    input{
+        
+        padding: 10px 5px;        
+        border: none;
+        border-radius: 3px;
+        height: 36px;
+        font-size: 1em;
+    }    
 
     button[type=submit]{
         width: 150px;
@@ -52,6 +61,8 @@ export const Content = styled.div`
         margin-left: 10px;
     }
 `;
+
+
 
 export const TableCategorias = styled.div`
     background-color: #FFF;

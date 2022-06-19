@@ -15,9 +15,9 @@ import Select from 'react-select';
 import Header from '../../components/Header';
 import Title from '../../components/Title';
 
-import { Content, TableCategorias, BtEditar } from './styles';
+import { Content, TableCategorias } from './styles';
 import { MdStyle } from 'react-icons/md';
-import { deepOrange } from '@material-ui/core/colors';
+
 
 export default function Despesa() {
     const { user } = useContext(AuthContext);
@@ -28,12 +28,10 @@ export default function Despesa() {
     const [data, setData] = useState(new Date());
     const [listaDespesas, setListaDespesas] = useState([]);
     const [listaCategorias, setListaCategorias] = useState([]);
-    const [listaVazia, setListaVazia] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [novo, setNovo] = useState(true);
-    const [saving, setSaving] = useState(false);
+    const [listaVazia, setListaVazia] = useState(false);    
+    const [novo, setNovo] = useState(true);    
     const [despesa, setDespesa] = useState(null)
-    const [fixa, setFixa] = useState(false);
+    const [contaPaga, setContaPaga] = useState(true);
 
     useEffect(()=>{
         const d = new Date();
@@ -65,12 +63,9 @@ export default function Despesa() {
             updateState(snapshot, despesasFixasSnapshot);
         })
         .catch((error)=>{console.log(error)});
-
-        setLoading(false);
     }
 
-    async function handleSubmit(e){
-        setSaving(true);
+    async function handleSubmit(e){        
         e.preventDefault();
             if(novo){
                 await firebase.firestore().collection('Despesas')
@@ -83,7 +78,7 @@ export default function Despesa() {
                     mes: data.getMonth()+1,
                     ano: data.getFullYear(),
                     idUsuario: user.uid,
-                    fixa: fixa
+                    contaPaga: contaPaga
                 })
                 .then(()=>{
                     carregaDespesas(data.getMonth()+1);
@@ -91,9 +86,9 @@ export default function Despesa() {
                     setDescricao('');
                     setTipo('');
                     setValor(0);
-                    setFixa(false);
+                    setContaPaga(false);
                     //setData(d);
-                    setSaving(false);
+                    
                 })
             }else{
                 await firebase.firestore().collection('Despesas')   
@@ -106,7 +101,7 @@ export default function Despesa() {
                     dataformatada: data.toLocaleDateString(),
                     mes: data.getMonth()+1,
                     ano: data.getFullYear(),
-                    fixa: fixa
+                    contaPaga: contaPaga
                 })
                 .then(()=>{
                     carregaDespesas(data.getMonth()+1);
@@ -114,17 +109,13 @@ export default function Despesa() {
                     setDescricao('');
                     setTipo('');
                     setValor(0);
-                    setFixa(false);
-                    //setData(d);
-                    setLoading(false);
+                    setContaPaga(true);              
                     setNovo(true);
                 })
                 .catch((error)=>{
-                    console.log(error);
-                    setLoading(false);
+                    console.log(error);                    
                     setNovo(true);
-                })
-                setSaving(false);
+                })                
             }
         
     }
@@ -152,39 +143,14 @@ export default function Despesa() {
 
     async function updateState(snapshot, snapshotFixas){
         
-        const listaFixas=[];
+        
         const lista = [];
 
-        const listaVazia = snapshot.size===0;
-        const listaFixasVazia = snapshotFixas.size===0;
-
-        if(!listaFixasVazia){
-            
-            snapshotFixas.forEach((doc)=>{
-                listaFixas.push({
-                    id: doc.id,
-                    descricao: doc.data().descricao,
-                    tipo: doc.data().tipo,
-                    valor: doc.data().valor,
-                    data: doc.data().data,
-                    dataFormatada: format(doc.data().data.toDate(), 'dd/MM/yyyy'),
-                    fixa: doc.data().fixa
-                })
-            })
-        }
-
+        const listaVazia = snapshot.size===0;        
+        
         if(!listaVazia){
             
             snapshot.forEach((doc)=>{
-                
-                let index = listaFixas.findIndex((desp)=>{
-                    
-                        return desp.descricao === doc.data().descricao && desp.valor === doc.data().valor && desp.tipo === doc.data().tipo;
-                });
-                    
-               
-
-                if(index <0){
                     lista.push({
                         id: doc.id,
                         descricao: doc.data().descricao,
@@ -192,11 +158,8 @@ export default function Despesa() {
                         valor: doc.data().valor,
                         data: doc.data().data,
                         dataFormatada: format(doc.data().data.toDate(), 'dd/MM/yyyy'),
-                        fixa: doc.data().fixa
-                    });
-                };
-
-                
+                        contaPaga: doc.data()?.contaPaga
+                    });               
             })
             //setListaCategorias(listaCategorias => [...listaCategorias, ...lista])
             setListaDespesas(lista);
@@ -204,14 +167,13 @@ export default function Despesa() {
 
         }
 
-        if(listaVazia && listaFixasVazia){            
+        if(listaVazia){            
             setListaVazia(true);
         }
         
 
-        //arrayDespesas = [...listaFixas,...lista];
-        const listaRetorno = [...listaFixas,...lista];
-        setListaDespesas(listaRetorno);
+       
+        setListaDespesas(lista);
     }
 
     
@@ -227,12 +189,11 @@ export default function Despesa() {
         setTipo(tipoSelecionado);
         setValor(despesa.valor);
         setData(new Date(despesa.data.toDate()));
-        setFixa(despesa.fixa);
+        setContaPaga(despesa?.contaPaga);
         window.scrollTo(0,0);
     }
 
-    async function handleDelete(despesa){
-        setLoading(true);
+    async function handleDelete(despesa){        
         await firebase.firestore().collection('Despesas')
         .doc(despesa.id).delete()
         .then(()=>{
@@ -244,18 +205,17 @@ export default function Despesa() {
         })
         .catch((error)=>{
             console.log(error);
-            setNovo(true);
-            setLoading(false);
+            setNovo(true);            
         })
         
     };
 
     const handleCheckChange = () => {
-        setFixa(!fixa);
+        setContaPaga(!contaPaga);
     }
     
  return (
-   <div style={    {height: '-webkit-fill-available'}}>
+   <div>
        <Header/>
 
        <Title name="Incluir Despesa">
@@ -274,8 +234,8 @@ export default function Despesa() {
                 <label>Valor (R$)</label>
                 <CurrencyInput className="input" prefix="R$" decimalSeparator="," groupSeparator="." value={valor} onValueChange={(value)=>setValor(value)} />
                 <label id="checkbox">
-                    <input type="checkbox" checked={fixa} onChange={handleCheckChange}/>
-                    Despesa fixa
+                    <input type="checkbox" checked={contaPaga} onChange={handleCheckChange}/>
+                    Pago?
                 </label>
                 
                 <button type="submit">Salvar</button>
@@ -292,6 +252,7 @@ export default function Despesa() {
                                 <th scope="col">Data</th>
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Valor (R$)</th>
+                                <th scope="col">Paga</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -303,6 +264,7 @@ export default function Despesa() {
                                         <td data-label="Data">{despesa.dataFormatada}</td>
                                         <td data-label="Categoria">{despesa.tipo}</td>
                                         <td data-label="Valor(R$)">{despesa.valor}</td>
+                                        <td data-label="Paga">{despesa.contaPaga ? 'Sim' : 'Não'}</td>
                                         <td data-label="">
                                             <button onClick={()=>handleEditar(despesa)}>Editar</button>
                                             <button onClick={()=>handleDelete(despesa)}>Excluir</button>

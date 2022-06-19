@@ -62,6 +62,7 @@ function ResumoProvider({children}){
             let hoje = new Date();
             //let mes = returnCurrentMonth();
             await firebase.firestore().collection('Despesas').where('mes', '==', pMes).where('ano', '==', hoje.getFullYear())
+                .where('contaPaga', '==', true)
                 .where('idUsuario', '==', uid)
                 .get()
                 .then((snapshot)=>{

@@ -3,13 +3,14 @@ import firebase from '../../services/firebaseConnection';
 import Header from '../../components/Header';
 import Title from '../../components/Title';
 
-import { Content, TableCategorias } from './styles';
+import { Content, TableCategorias, divSeletor  } from './styles';
 import { SketchPicker } from 'react-color';
+import Select from 'react-select';
 import { MdStyle } from 'react-icons/md';
 
 export default function Categorias() {
     const [nome, setNome] = useState('');
-    const [tipo, setTipo] = useState('Receita');
+    const [tipo, setTipo] = useState(null);
     const [listaCategorias, setListaCategorias] = useState([]);
     const [listaVazia, setListaVazia] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -17,6 +18,14 @@ export default function Categorias() {
     const [saving, setSaving] = useState(false);
     const [categoria, setCategoria] = useState(null);
     const [corSelecionada, setCorSelecionada]= useState('#FFF');
+
+    const listaTipo = [{
+        value: 'Receita',
+        label: 'Receita',
+    }, {
+        value: 'Despesa',
+        label: 'Despesa',
+    }];
     
 
     useEffect(()=>{
@@ -129,8 +138,39 @@ export default function Categorias() {
             setLoading(false);
         })
         
-    }
+    }    
+
+    const customStyles = {
+        control: (provided, state) => ({
+          ...provided,
+          background: '#fff',
+          borderColor: '#9e9e9e',
+          minHeight: '36px',
+          height: '36px',
+          boxShadow: state.isFocused ? null : null,
+          marginBottom: '10px',
+        }),
     
+        valueContainer: (provided, state) => ({
+          ...provided,
+          height: '36px',
+          padding: '0px 3px'          
+        }),
+    
+        input: (provided, state) => ({
+          ...provided,
+          margin: '0px 0px',
+        }),
+        indicatorSeparator: state => ({
+          display: 'none',
+        }),
+        indicatorsContainer: (provided, state) => ({
+          ...provided,
+          height: '36px',
+        }),
+      };
+    
+
  return (
    <div>
        <Header/>
@@ -144,11 +184,18 @@ export default function Categorias() {
                 <label>Nome</label>
                 <input type="text" value={nome} onChange={(e)=>{setNome(e.target.value)}}/>
                 <label>Tipo</label> 
-                <select value={tipo}  onChange={(e)=>setTipo(e.target.value)}>
+                <Select value={tipo} onChange={setTipo} options={listaTipo} styles={customStyles} />
+
+                {/* <select value={tipo}  onChange={(e)=>setTipo(e.target.value)}>
                     <option key={'Receita'}>Receita</option>
                     <option key={'Despesa'}>Despesa</option>
-                </select>
-                <SketchPicker color={corSelecionada} onChangeComplete={(value)=>setCorSelecionada(value)}/>
+                </select> */}
+                <div id='seletorCor'>
+                    <SketchPicker color={corSelecionada} onChangeComplete={(value)=>setCorSelecionada(value)}/>
+                </div>
+                    
+                
+                
                 <button type="submit">Salvar</button>
             </form>
 

@@ -94,7 +94,7 @@ export default function Home() {
     let ano = getYear();
     //let mes = returnCurrentMonth();
     await firebase.firestore().collection('Despesas').where('mes', '==', pMes).where('ano', '==', ano)
-        .where('idUsuario', '==', user.uid)
+        .where('idUsuario', '==', user.uid).where('contaPaga', '==', true)
         .get()
         .then((snapshot)=>{
           const listaVazia = snapshot.size===0;

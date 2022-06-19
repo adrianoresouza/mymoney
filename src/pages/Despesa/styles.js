@@ -9,8 +9,7 @@ export const Content = styled.div`
     margin-right: 10px;
     border-radius: 5px;
     background-color: #F0F3F4;;
-    padding: .8em;
-    height: -webkit-fill-available;
+    padding: .8em;    
     
     label{
         margin-bottom: 5px;
