@@ -47,14 +47,21 @@ export default function Receita() {
     useEffect(()=>{
         
         if(data!==null){
-            let mes = data.getMonth()+1;
-            carregaReceitas(mes);
+            let mes = data?.getMonth()+1;
+            let ano = data?.getFullYear();
+            carregaReceitas(mes, ano);
         }
     },[data])
     
 
-    async function carregaReceitas(pMes){
+    async function carregaReceitas(pMes, pAno){
+        if (pMes == undefined || pAno == undefined){
+            const diaDeHoje = new Date();
+            pMes= diaDeHoje.getMonth() + 1;
+            pAno = diaDeHoje.getFullYear();
+        }
         await firebase.firestore().collection('Receitas').where('mes','==',pMes).where('idUsuario', '==', user.uid).orderBy('data', 'desc')
+        .where('ano', '==', pAno)
         .get()
         .then((snapshot)=>{
             updateState(snapshot);

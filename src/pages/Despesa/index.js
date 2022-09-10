@@ -44,23 +44,30 @@ export default function Despesa() {
     },[]);
 
     useEffect(()=>{
-        if(data!==null){
-            let mes = data.getMonth()+1;
-            carregaDespesas(mes);
+        if(data!==undefined){
+            const mes = data?.getMonth()+1;
+            const ano = data?.getFullYear();           
+            
+            carregaDespesas(mes, ano);
         }
     },[data])
 
-    async function carregaDespesas(pMes){
-
-        const despesasFixasSnapshot = await firebase.firestore().collection('Despesas').where('fixa','==', true).orderBy('data', 'desc')
+    async function carregaDespesas(pMes, pAno){
+        if (pMes == undefined || pAno == undefined){
+            const diaDeHoje = new Date();
+            pMes= diaDeHoje.getMonth() + 1;
+            pAno = diaDeHoje.getFullYear();
+        }
+        let despesas;        
+        await firebase.firestore().collection('Despesas')
+        .where('mes','==',pMes)
         .where('idUsuario', '==', user.uid)
-        .get();
-
-        await firebase.firestore().collection('Despesas').where('mes','==',pMes).orderBy('data', 'desc')
-        .where('idUsuario', '==', user.uid)
+        .where('ano', '==', pAno)
+        .orderBy('data', 'desc')        
+        
         .get()
         .then((snapshot)=>{
-            updateState(snapshot, despesasFixasSnapshot);
+            updateState(snapshot, despesas);
         })
         .catch((error)=>{console.log(error)});
     }
