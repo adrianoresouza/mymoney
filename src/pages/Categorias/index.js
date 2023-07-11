@@ -3,14 +3,14 @@ import firebase from '../../services/firebaseConnection';
 import Header from '../../components/Header';
 import Title from '../../components/Title';
 
-import { Content, TableCategorias, divSeletor  } from './styles';
+import { Content, TableCategorias, DropDown  } from './styles';
 import { SketchPicker } from 'react-color';
 import Select from 'react-select';
 import { MdStyle } from 'react-icons/md';
 
 export default function Categorias() {
     const [nome, setNome] = useState('');
-    const [tipo, setTipo] = useState(null);
+    const [tipo, setTipo] = useState({});
     const [listaCategorias, setListaCategorias] = useState([]);
     const [listaVazia, setListaVazia] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -20,11 +20,11 @@ export default function Categorias() {
     const [corSelecionada, setCorSelecionada]= useState('#FFF');
 
     const listaTipo = [{
-        value: 'Receita',
         label: 'Receita',
+        value: 'Receita',
     }, {
-        value: 'Despesa',
         label: 'Despesa',
+        value: 'Despesa',
     }];
     
 
@@ -39,8 +39,9 @@ export default function Categorias() {
         await firebase.firestore().collection('Categorias')
         .get()
         .then((snapshot)=>{
+            console.log('snapshot' + snapshot)
             updateState(snapshot);
-        })
+        })  
         .catch((error)=>{console.log(error)});
 
         setLoading(false);
@@ -53,7 +54,7 @@ export default function Categorias() {
                 await firebase.firestore().collection('Categorias')
             .add({
                 nome: nome,
-                tipo: tipo,
+                tipo: tipo.value,
                 cor: corSelecionada.hex,
             })
             .then(()=>{
@@ -68,7 +69,7 @@ export default function Categorias() {
             .doc(categoria.id)
             .update({
                 nome: nome,
-                tipo: tipo,
+                tipo: tipo.value,
                 cor: corSelecionada.hex,
             })
             .then(()=>{
@@ -95,7 +96,7 @@ export default function Categorias() {
         if(!listaVazia){
             let lista = [];
             snapshot.forEach((doc)=>{
-                
+                console.log(doc.data())
                 lista.push({
                     id: doc.id,
                     nome: doc.data().nome,
@@ -186,10 +187,10 @@ export default function Categorias() {
                 <label>Tipo</label> 
                 <Select value={tipo} onChange={setTipo} options={listaTipo} styles={customStyles} />
 
-                {/* <select value={tipo}  onChange={(e)=>setTipo(e.target.value)}>
-                    <option key={'Receita'}>Receita</option>
-                    <option key={'Despesa'}>Despesa</option>
-                </select> */}
+                {/* <DropDown value={tipo}  onChange={(e)=>setTipo(e.target.value)} className="seletor">
+                    <option key={'Receita'} value='Receita'>Receita</option>
+                    <option key={'Despesa'} value='Despesa'>Despesa</option>
+                </DropDown> */}
                 <div id='seletorCor'>
                     <SketchPicker color={corSelecionada} onChangeComplete={(value)=>setCorSelecionada(value)}/>
                 </div>

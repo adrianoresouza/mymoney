@@ -114,3 +114,6 @@ export const TableCategorias = styled.div`
 
     
 `;
+
+export const DropDown = styled.select`
+min-height: 20px`
