@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Projeto pessoal de um controle de finanças
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto foi criado para praticar habilidades em front-end utilizando o framework reactJS.
 
 ## Available Scripts
 
