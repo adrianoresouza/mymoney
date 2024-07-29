@@ -5,7 +5,7 @@ Este projeto foi criado para praticar habilidades em front-end utilizando o fram
 
 ## Próximos Passos
 
-Futuramente serão alteradas os leiautes das telas.
+Futuramente serão alterados os leiautes das telas.
 Pretendo incluir a lib TailwindCSS com o intuito de praticar e se manter atualizado.
 
 ### `yarn start`
