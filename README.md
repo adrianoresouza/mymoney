@@ -2,9 +2,11 @@
 
 Este projeto foi criado para praticar habilidades em front-end utilizando o framework reactJS.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Próximos Passos
+
+Futuramente serão alteradas os leiautes das telas.
+Pretendo incluir a lib TailwindCSS com o intuito de praticar e se manter atualizado.
 
 ### `yarn start`
 
