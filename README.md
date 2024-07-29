@@ -8,6 +8,10 @@ Este projeto foi criado para praticar habilidades em front-end utilizando o fram
 Futuramente serão alterados os leiautes das telas.
 Pretendo incluir a lib TailwindCSS com o intuito de praticar e se manter atualizado.
 
+##Utilização
+
+Os trechos adicionados automaticamente pelo GitHub ao detectar o framework utilizado. Assim que possível irei redigir o README de maneira a personaliza-lo.
+
 ### `yarn start`
 
 Runs the app in the development mode.\
